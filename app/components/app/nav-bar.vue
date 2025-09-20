@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import AuthButton from "../auth-button.vue";
+</script>
+
 <template>
   <div class="navbar bg-primary text-primary-content shadow-sm">
     <div class="flex-1">
@@ -11,9 +15,7 @@
           <AppThemeSelector />
         </li>
         <li>
-          <NuxtLink class="btn btn-accent">
-            Sign In w/ <Icon name="tabler:brand-github-filled" size="24" />
-          </NuxtLink>
+          <AuthButton />
         </li>
       </ul>
     </div>
