@@ -18,7 +18,7 @@ export default withNuxt(antfu({
   rules: {
     "ts/no-redeclare": "off",
     "ts/consistent-type-definitions": ["error", "type"],
-    "no-console": ["warn"],
+    "no-console": ["warn", { allow: ["info"] }],
     "antfu/no-top-level-await": ["off"],
     "node/prefer-global/process": ["off"],
     "node/no-process-env": ["error"],
