@@ -20,8 +20,5 @@ export default function tryParseEnv<T extends ZodRawShape>(
       e.stack = "";
       throw e;
     }
-    else {
-      console.error(error);
-    }
   }
 }
