@@ -15,6 +15,13 @@
       "when": 1758397208839,
       "tag": "0001_nervous_tusk",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1758518728187,
+      "tag": "0002_lowly_paibok",
+      "breakpoints": true
     }
   ]
 }
