@@ -2,6 +2,7 @@
 const props = defineProps<{
   label: string;
   name: string;
+  disabled?: boolean;
   error?: string;
   type?: "text" | "textarea" | "number";
 }>();
@@ -13,6 +14,7 @@ const props = defineProps<{
       {{ label }}
     </legend>
     <Field
+      :disabled="disabled"
       :as="type === 'textarea' ? 'textarea' : 'input'"
       :name="name"
       :type="type || 'text'"
