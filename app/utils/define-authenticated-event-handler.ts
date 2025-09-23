@@ -1,6 +1,13 @@
-import type { EventHandler } from "h3";
+import type { UserWithId } from "~~/shared/auth";
+import type { H3Event, H3EventContext } from "h3";
 
-export default function defineAuthenticatedEventHandler(handler: EventHandler) {
+type AuthenticatedEvent = H3Event & {
+  context: H3EventContext & {
+    user: UserWithId;
+  };
+};
+
+export default function defineAuthenticatedEventHandler(handler: (event: AuthenticatedEvent) => any) {
   return defineEventHandler(async (event) => {
     if (!event.context.user) {
       return sendError(event, createError({
@@ -8,6 +15,6 @@ export default function defineAuthenticatedEventHandler(handler: EventHandler) {
         statusMessage: "Unauthorized",
       }));
     }
-    return handler(event);
+    return handler(event as AuthenticatedEvent);
   });
 }
