@@ -2,7 +2,7 @@
 import type { FetchError } from "ofetch";
 
 import { toTypedSchema } from "@vee-validate/zod";
-import { insertLocation } from "~~/shared/db/schema";
+import { InsertLocation } from "~~/shared/db/schema";
 
 const { $csrfFetch } = useNuxtApp();
 const router = useRouter();
@@ -11,7 +11,7 @@ const loading = ref(false);
 const submitted = ref(false);
 
 const { handleSubmit, errors, meta, setErrors } = useForm({
-  validationSchema: toTypedSchema(insertLocation),
+  validationSchema: toTypedSchema(InsertLocation),
 });
 
 const onSubmit = handleSubmit(async (values) => {
