@@ -5,7 +5,9 @@ import { InsertLocation } from "~~/shared/db/schema";
 import { customAlphabet } from "nanoid";
 import slugify from "slug";
 
-export default defineEventHandler(async (event) => {
+import defineAuthenticatedEventHandler from "~/utils/define-authenticated-event-handler";
+
+export default defineAuthenticatedEventHandler(async (event) => {
   if (!event.context.user) {
     return sendError(event, createError({
       statusCode: 401,
