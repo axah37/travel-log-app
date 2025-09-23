@@ -1,8 +1,7 @@
 import type { DrizzleError } from "drizzle-orm";
 
-import db from "~~/shared/db";
-import { insertLocation, location } from "~~/shared/db/schema";
-import { and, eq } from "drizzle-orm";
+import { findLocationByName, findLocationBySlug, insertLocation } from "~~/shared/db/queries/location";
+import { InsertLocation } from "~~/shared/db/schema";
 import { customAlphabet } from "nanoid";
 import slugify from "slug";
 
@@ -13,11 +12,11 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Unauthorized",
     }));
   }
-  const body = await readValidatedBody(event, insertLocation.safeParse);
-  if (!body.success) {
-    const statusMessage = body.error.issues.map(issue => `${issue.path.join("")}: ${issue.message}`).join("; ");
+  const result = await readValidatedBody(event, InsertLocation.safeParse);
+  if (!result.success) {
+    const statusMessage = result.error.issues.map(issue => `${issue.path.join("")}: ${issue.message}`).join("; ");
 
-    const data = body.error.issues.reduce((errors, issue) => {
+    const data = result.error.issues.reduce((errors, issue) => {
       errors[issue.path.join("")] = issue.message;
       return errors;
     }, {} as Record<string, string>);
@@ -27,9 +26,7 @@ export default defineEventHandler(async (event) => {
       data,
     }));
   }
-  const existingLocation = await db.query.location.findFirst({
-    where: and(eq(location.name, body.data.name), eq(location.userId, event.context.user.id)),
-  });
+  const existingLocation = await findLocationByName(result.data, event.context.user.id);
   if (existingLocation) {
     return sendError(event, createError({
       statusCode: 409,
@@ -38,12 +35,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const [created] = await db.insert(location).values({
-      ...body.data,
-      slug: await generateUniqueSlug(body.data.name),
-      userId: event.context.user.id,
-    }).returning();
-    return created;
+    return insertLocation(result.data, await generateUniqueSlug(result.data.name), event.context.user.id);
   }
   catch (e) {
     const error = e as DrizzleError;
@@ -61,14 +53,10 @@ export default defineEventHandler(async (event) => {
 async function generateUniqueSlug(name: string): Promise<string> {
   const nanoid = customAlphabet("1234567890abcdefghijklmnopqrstuvwxyz", 5);
   let slug = slugify(name);
-  let existing = !!(await db.query.location.findFirst({
-    where: eq(location.slug, slug),
-  }));
+  let existing = !!(await findLocationBySlug(slug));
   while (existing) {
     const idSlug = slug += `-${nanoid()}`;
-    existing = !!(await db.query.location.findFirst({
-      where: eq(location.slug, idSlug),
-    }));
+    existing = !!(await findLocationBySlug(idSlug));
     if (!existing) {
       slug = idSlug;
     }
