@@ -105,10 +105,18 @@ onBeforeRouteLeave(() => {
           <Icon name="tabler:arrow-left" size="24" />
         </button>
 
-        <button :disabled="loading" type="submit" class="btn btn-primary">
+        <button
+          :disabled="loading"
+          type="submit"
+          class="btn btn-primary"
+        >
           Add
           <span v-if="loading" class="loading loading-spinner loading-sm" />
-          <Icon v-else name="tabler:circle-plus-filled" size="24" />
+          <Icon
+            v-else
+            name="tabler:circle-plus-filled"
+            size="24"
+          />
         </button>
       </div>
     </form>
