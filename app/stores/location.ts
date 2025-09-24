@@ -19,6 +19,7 @@ export const useLocationStore = defineStore("useLocationStore", () => {
         label: location.name,
         lat: location.lat,
         long: location.long,
+        description: location.description,
       }));
     }
     sidebarStore.loading = status.value === "pending";

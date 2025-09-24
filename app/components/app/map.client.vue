@@ -36,6 +36,14 @@ onMounted(() => {
             />
           </div>
         </template>
+        <MglPopup>
+          <h3 class="text-xl">
+            {{ point.label }}
+          </h3>
+          <p v-if="point.description">
+            {{ point.description }}
+          </p>
+        </MglPopup>
       </MglMarker>
     </MglMap>
   </div>

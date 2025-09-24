@@ -10,7 +10,6 @@ export const useMapStore = defineStore("useMapStore", () => {
 
     effect(() => {
       const firstPoint = mapPoints.value[0];
-      console.log(firstPoint);
       if (!firstPoint) {
         return;
       }
