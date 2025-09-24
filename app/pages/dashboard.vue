@@ -19,8 +19,12 @@ function toggleSideBar() {
 
 <template>
   <div class="flex-1 flex">
-    <div class="bg-base-100 transistion-all duration-300" :class="{ 'w-64': isSideBarOpen, 'w-16': !isSideBarOpen }">
-      <div class="flex hover:cursor-pointer hover:bg-base-200 p-2" :class="{ 'justify-center': !isSideBarOpen, 'justify-end': isSideBarOpen }" @click="toggleSideBar()">
+    <div class="bg-base-100 transistion-all duration-300 shrink-0" :class="{ 'w-64': isSideBarOpen, 'w-16': !isSideBarOpen }">
+      <div
+        class="flex hover:cursor-pointer hover:bg-base-200 p-2"
+        :class="{ 'justify-center': !isSideBarOpen, 'justify-end': isSideBarOpen }"
+        @click="toggleSideBar()"
+      >
         <Icon :name="isSideBarOpen ? 'tabler:chevron-left' : 'tabler:chevron-right'" size="32" />
       </div>
       <div class="flex flex-col gap-1">
@@ -59,9 +63,11 @@ function toggleSideBar() {
         />
       </div>
     </div>
-    <div class="flex-1 flex flex-col">
-      <NuxtPage />
-      <AppMap class="flex-1" />
+    <div class="flex-1 overflow-auto">
+      <div class="flex flex-col size-full">
+        <NuxtPage />
+        <AppMap class="flex-1" />
+      </div>
     </div>
   </div>
 </template>
