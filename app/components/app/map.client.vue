@@ -72,6 +72,7 @@ onMounted(() => {
 
       <MglMarker
         v-if="mapStore.addedPoint"
+        class-name="z-50"
         :coordinates="[mapStore.addedPoint.long, mapStore.addedPoint.lat]"
         draggable
         @update:coordinates="updateAddedPoint($event)"
