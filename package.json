@@ -9,6 +9,7 @@
     "dev:studio": "pnpm drizzle-kit studio",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "typecheck": "nuxi typecheck",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -51,7 +52,8 @@
     "eslint-plugin-format": "^1.0.2",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.6",
-    "tsx": "^4.20.5"
+    "tsx": "^4.20.5",
+    "vue-tsc": "^3.1.0"
   },
   "lint-staged": {
     "*": "pnpm lint"
