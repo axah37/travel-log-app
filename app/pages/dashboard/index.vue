@@ -11,7 +11,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="p-4">
+  <div class="p-4 min-h-64">
     <h2 class="text-2xl">
       Locations
     </h2>
@@ -24,11 +24,11 @@ onMounted(() => {
         :key="location.id"
         class="card card-compact bg-base-200 border-2 h-40 w-72 mb-2 shrink-0 hover: cursor-pointer"
         :class="{
-          'border-accent': location.id === mapStore.selectedPoint?.id,
-          'border-transparent': location.id !== mapStore.selectedPoint?.id,
+          'border-accent': isPointSelected(location, mapStore.selectedPoint),
+          'border-transparent': !isPointSelected(location, mapStore.selectedPoint),
         }"
         :to="{ name: 'dashboard-location-slug', params: { slug: location.slug } }"
-        @mouseenter="mapStore.selectedPoint = location"
+        @mouseenter="mapStore.selectedPoint = createPointFromLocation(location)"
         @mouseleave="mapStore.selectedPoint = null"
       >
         <div class="card-body overflow-y-scroll">

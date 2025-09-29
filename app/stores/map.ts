@@ -25,7 +25,7 @@ export const useMapStore = defineStore("useMapStore", () => {
       ));
       map.map?.fitBounds(bounds, {
         padding: 60,
-        maxZoom: 3,
+        maxZoom: 10,
       });
     });
 
@@ -34,7 +34,7 @@ export const useMapStore = defineStore("useMapStore", () => {
         map.map?.flyTo({
           center: [newValue.long, newValue.lat],
           speed: 0.7,
-          zoom: 6,
+          zoom: 10,
         });
       }
     }, {
